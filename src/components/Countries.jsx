@@ -12,6 +12,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 const Countries = () => {
   const [search, setSearch] = useState('')
 
+  console.log("Search: ", search)
+
   return (
     <Container fluid>
       <Row>
@@ -34,19 +36,10 @@ const Countries = () => {
                 to={`/countries/`}
               >
                 <Card className="h-100">
-                  <Card.Img
-                    variant="top"
-                    className="rounded h-50"
-                    style={{
-                      objectFit: 'cover',
-                      minHeight: '200px',
-                      maxHeight: '200px',
-                    }}
-                  />
                   <Card.Body className="d-flex flex-column">
-                    <Card.Title>{}</Card.Title>
+                    <Card.Title>{'Single Country Common Name'}</Card.Title>
                     <Card.Subtitle className="mb-5 text-muted">
-                      {}
+                      {'Single Country Official Name'}
                     </Card.Subtitle>
                     <ListGroup
                       variant="flush"
