@@ -14,6 +14,13 @@ const Countries = () => {
 
   console.log("Search: ", search)
 
+  // We will be replacing this with data from our API.
+  const country = {
+    name: {
+      common: 'Example Country'
+    }
+  }
+
   return (
     <Container fluid>
       <Row>
@@ -33,7 +40,8 @@ const Countries = () => {
       <Row xs={2} md={3} lg={4} className=" g-3">
             <Col className="mt-5">
               <LinkContainer
-                to={`/countries/`}
+                to={`/countries/${country.name.common}`}
+                state={{ country: country }}
               >
                 <Card className="h-100">
                   <Card.Body className="d-flex flex-column">
