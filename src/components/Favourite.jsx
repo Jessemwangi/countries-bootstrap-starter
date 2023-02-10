@@ -11,32 +11,32 @@ import Row from 'react-bootstrap/Row';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { initializeCountries } from '../features/contriesSlice';
-import { Image } from 'react-bootstrap';
-import { addToFavourite } from '../features/ProfileSlice';
+import { Button, Image } from 'react-bootstrap';
+import { clearfavourite, removeFromFav } from '../features/ProfileSlice';
 
 
-const Countries = () => {
+const Favourite = () => {
   const [search, setSearch] = useState('')
-
+const [favouritesList, setFavouritesList] = useState([]);
   const dispatch = useDispatch();
-  const countryList = useSelector(state => state.countries.countries)  // state.countries ( this is store).countries(this is slice   initialState: {countries: [],},)
+  let countryList = useSelector(state => state.countries.countries)  // state.countries ( this is store).countries(this is slice   initialState: {countries: [],},)
   const isLoading = useSelector(state => state.countries.isLoading)
+
+
   console.log(isLoading)
  
+  if(favouritesList !==  null){
+    countryList = countryList.filter(country => favouritesList.includes(country.name.common))
+  }
+  else{
+    countryList=[];
+  }
  useEffect(() => {
   
  dispatch(initializeCountries())
+ setFavouritesList(localStorage.getItem('favCountries'))
 
  }, [dispatch])
- 
- 
- 
-  // We will be replacing this with data from our API.
-  const country = {
-    name: {
-      common: 'Example Country'
-    }
-  }
 
   return (
     <Container fluid>
@@ -53,6 +53,11 @@ const Countries = () => {
             />
           </Form>
         </Col>
+      </Row>
+      <Row xs={2} md={3} lg={4} className=" g-3">
+        <Button variant='danger' className='p-3' onClick={()=>{
+            dispatch(clearfavourite())
+        }}> Clear All</Button>
       </Row>
       <Row xs={2} md={3} lg={4} className=" g-3">
         {
@@ -73,14 +78,15 @@ const Countries = () => {
           }).map(country =>(
 
             <Col className="mt-5" key={country.name.common}>
-              <LinkContainer
+              {/* <LinkContainer
                 to={`/countries/${country.name.common}`}
                 state={{ country: country }}
-              >
+              > */}
                 <Card className="h-100">
                   <i className='bi bi-heart-fill text-danger m-1 p-1' onClick={
                     () =>{
-                      dispatch(addToFavourite(country.name.common))
+                        console.log(country.name.common)
+                      dispatch(removeFromFav(country.name.common))
                     }
                     }/>
 
@@ -114,7 +120,7 @@ const Countries = () => {
                     </ListGroup>
                   </Card.Body>
                 </Card>
-              </LinkContainer>
+              {/* </LinkContainer> */}
             </Col>
           ))
        )
@@ -125,4 +131,4 @@ const Countries = () => {
   );
 };
 
-export default Countries;
+export default Favourite;
