@@ -36,7 +36,7 @@ const [favouritesList, setFavouritesList] = useState([]);
  dispatch(initializeCountries())
  setFavouritesList(localStorage.getItem('favCountries'))
 
- }, [dispatch])
+ }, [dispatch, favouritesList])
 
   return (
     <Container fluid>
