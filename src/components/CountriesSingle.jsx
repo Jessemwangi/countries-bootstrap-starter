@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom'
 
 const CountriesSingle = () => {
   const country = useLocation()
-const [countryName,setCountryName] =useState(country.state.country.name.common)
+const [countryName,] =useState(country.state.country.name.common)
 const [loading,setLoading]=useState(true)
 const [error,SetError] = useState()
 

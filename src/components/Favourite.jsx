@@ -21,9 +21,6 @@ const [favouritesList, setFavouritesList] = useState([]);
   const dispatch = useDispatch();
   let countryList = useSelector(state => state.countries.countries)  // state.countries ( this is store).countries(this is slice   initialState: {countries: [],},)
   const isLoading = useSelector(state => state.countries.isLoading)
-
-
-  console.log(isLoading)
  
   if(favouritesList !==  null){
     countryList = countryList.filter(country => favouritesList.includes(country.name.common))
