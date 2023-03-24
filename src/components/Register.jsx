@@ -4,17 +4,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, registerWithEmailAndPassword } from "../auth/Firebase";
 
 const Register = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("")
-    const [name, setName] = useState("");
+    const init={
+name:"",
+email:"",
+password:"",
+    }
+    const [userData, setUserData] = useState({init});
     const [user, loading, error] = useAuthState(auth)
     const navigate = useNavigate();
 
     const register = (e) => {
         e.preventDefault();
-        console.log("registration")
-        if(!name) alert("Please enter name");
-        registerWithEmailAndPassword(name, email, password)
+         if(!userData.name) alert("Please enter name"); 
+         registerWithEmailAndPassword(userData.name, userData.email, userData.password)
+    }
+
+    const handleOnChange = (e) => {
+        e.preventDefault();
+        setUserData({...userData, [e.target.name]:e.target.value})
+       
     }
 
     useEffect(() => {
@@ -33,13 +41,14 @@ const Register = () => {
         />
       </div>
       <div className="text-center mt-4 name">Login</div>
-      <form className="p-3 mt-3">
+      <form className="p-3 mt-3" onSubmit={register}> 
       <div className="form-field d-flex align-items-center">
           <span className="far fa-user"></span>
           <input
         type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={userData.name}
+        name="name"
+        onChange={handleOnChange}
         placeholder = "Full Name"
         />
         </div>
@@ -47,8 +56,8 @@ const Register = () => {
           <span className="far fa-user"></span>
           <input
             type="email"
-            name="userName"            onChange={(e) => setEmail(e.target.value)}
-            value={email}
+            name="email"          onChange={handleOnChange}
+            value={userData.email}
             id="userName"
             placeholder="Email"
           />
@@ -59,16 +68,16 @@ const Register = () => {
             type="password"
             name="password"
             id="pwd"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={userData.password}
+            onChange={handleOnChange}
             placeholder="Password"
           />
         </div>
-        <button
-          onClick={(e) => register}
+        <button type="submit"
+          onClick={register}
           className="btn mt-3"
         >
-          Login
+          Register
         </button>
       </form>
       <div className="text-center fs-6">

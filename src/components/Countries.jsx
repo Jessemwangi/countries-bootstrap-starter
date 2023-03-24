@@ -10,7 +10,6 @@ import Row from "react-bootstrap/Row";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { initializeCountries } from "../features/contriesSlice";
-import { Image } from "react-bootstrap";
 import { addToFavourite } from "../features/ProfileSlice";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../auth/Firebase";
@@ -23,13 +22,12 @@ const Countries = () => {
   const [search, setSearch] = useState("");
   const countryList = useSelector((state) => state.countries.countries); // state.countries ( this is store).countries(this is slice   initialState: {countries: [],},)
   const isLoading = useSelector((state) => state.countries.isLoading);
-  useEffect(()=>{
-    setFavouritesList(JSON.parse(localStorage.getItem('favCountries')))
-  },[])
    useEffect(() => {
-
+    if (localStorage.getItem("favCountries")){
+      setFavouritesList(JSON.parse(localStorage.getItem('favCountries')))
+    }
    dispatch(initializeCountries())
-   }, [dispatch])
+   }, [user,dispatch])
 
   // We will be replacing this with data from our API.
   const country = {

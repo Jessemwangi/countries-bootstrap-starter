@@ -6,17 +6,24 @@ import "./login.css";
 import { auth, logInWithEmailAndPassword } from "../auth/Firebase";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+    const init={
+        email:"",
+        password:"",
+            }
+            const [userData, setUserData] = useState({init});
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
-  console.log(user);
+  const handleOnChange = (e) => {
+    e.preventDefault();
+    setUserData({...userData, [e.target.name]:e.target.value})
+   
+}
   useEffect(() => {
     if (loading) return;
     if (user) navigate("/countries");
-
-  }, [user, loading]);
+if(error) console.log(error);
+  }, [user, loading, navigate, error]);
 
   return (
     loading ? (
@@ -40,9 +47,9 @@ const Login = () => {
           <input
           autoComplete="username email"
             type="email"
-            name="userName"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
+            name="email"
+            onChange={handleOnChange}
+            value={userData.email}
             id="userName"
             placeholder="Email"
           />
@@ -54,13 +61,13 @@ const Login = () => {
             type="password"
             name="password"
             id="pwd"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleOnChange}
+            value={userData.password}
             placeholder="Password"
           />
         </div>
         <button
-          onClick={() => logInWithEmailAndPassword(email, password)}
+          onClick={() => logInWithEmailAndPassword(userData.email, userData.password)}
           className="btn mt-3"
         >
           Login
