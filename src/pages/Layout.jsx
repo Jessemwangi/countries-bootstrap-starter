@@ -7,12 +7,16 @@ import Row from "react-bootstrap/Row";
 import { LinkContainer } from "react-router-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, logout } from "../auth/Firebase";
+import { ToastContainer } from "react-toastify";
 
 const Layout = () => {
   const [user] = useAuthState(auth);
   return (
     <Container fluid>
       <Row>
+       
+
+<ToastContainer/>
         <Navbar bg="dark" variant="dark">
           <Container className="justify-content-end">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -28,6 +32,7 @@ const Layout = () => {
                 <LinkContainer to="/favourite">
                   <Nav.Link>Favourite</Nav.Link>
                 </LinkContainer>
+                
               </Nav>
             </Navbar.Collapse>
             <div className="text-white">
@@ -53,7 +58,8 @@ const Layout = () => {
         </Navbar>
       </Row>
       <Row>
-        <Outlet />
+
+        <Outlet ></Outlet>
       </Row>
     </Container>
   );

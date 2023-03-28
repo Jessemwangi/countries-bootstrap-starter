@@ -1,38 +1,53 @@
 import { useEffect, useState } from "react";
-import {Col, Container, Spinner } from "react-bootstrap";
+import { Col, Container, Spinner } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
 import { auth, logInWithEmailAndPassword } from "../auth/Firebase";
+import { toast } from "react-toastify";
 
 const Login = () => {
-    const init={
-        email:"",
-        password:"",
-            }
-            const [userData, setUserData] = useState({init});
+  const init = {
+    email: "",
+    password: "",
+  };
+  const [userData, setUserData] = useState({});
   const [user, loading, error] = useAuthState(auth);
+  console.log(user)
   const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     e.preventDefault();
-    setUserData({...userData, [e.target.name]:e.target.value})
-   
-}
+    setUserData({ ...userData, [e.target.name]: e.target.value });
+    console.log(userData);
+  };
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (!userData.email || userData.password) {
+      toast.warn("Invalid username or Email, Empty Login details", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      logInWithEmailAndPassword(userData.email, userData.password);
+    }
+  };
   useEffect(() => {
-    if (loading) return;
     if (user) navigate("/countries");
-if(error) console.log(error);
-  }, [user, loading, navigate, error]);
+  }, [navigate, user]);
 
-  return (
-    loading ? (
-        <Container fluid>
-        <Col className="mt-5 text-center">
-          <Spinner animation="border" variant="info" />
-          </Col>
-          </Container>
-          ):(
+  return loading ? (
+    <Container fluid>
+      <Col className="mt-5 text-center">
+        <Spinner animation="border" variant="info" />
+      </Col>
+    </Container>
+  ) : (
     <div className="wrapper">
       <div className="logo">
         <img
@@ -45,7 +60,7 @@ if(error) console.log(error);
         <div className="form-field d-flex align-items-center">
           <span className="far fa-user"></span>
           <input
-          autoComplete="username email"
+            autoComplete="username email"
             type="email"
             name="email"
             onChange={handleOnChange}
@@ -57,7 +72,7 @@ if(error) console.log(error);
         <div className="form-field d-flex align-items-center">
           <span className="fas fa-key"></span>
           <input
-          autoComplete="password"
+            autoComplete="password"
             type="password"
             name="password"
             id="pwd"
@@ -66,17 +81,14 @@ if(error) console.log(error);
             placeholder="Password"
           />
         </div>
-        <button
-          onClick={() => logInWithEmailAndPassword(userData.email, userData.password)}
-          className="btn mt-3"
-        >
+        <button onClick={handleLogin} className="btn mt-3">
           Login
         </button>
       </form>
       <div className="text-center fs-6">
         Don't have an account? <Link to="/register">Register</Link>
       </div>
-    </div>)
+    </div>
   );
 };
 

@@ -16,25 +16,23 @@ import { auth } from "../auth/Firebase";
 
 
 const Countries = () => {
+ 
+  let favouritesList = useSelector(state => state.favourite.favCountries)
   const [user] = useAuthState(auth);
-  const [favouritesList, setFavouritesList] = useState([]);
+  // const [favouritesList, setFavouritesList] = useState([]);
+  // const [countryList,setCountryList] = useState([]);
   const dispatch = useDispatch();
+
   const [search, setSearch] = useState("");
-  const countryList = useSelector((state) => state.countries.countries); // state.countries ( this is store).countries(this is slice   initialState: {countries: [],},)
+  let countryList = useSelector((state) => state.countries.countries); // state.countries ( this is store).countries(this is slice   initialState: {countries: [],},)
   const isLoading = useSelector((state) => state.countries.isLoading);
+  // console.log(favourites,"country list")
    useEffect(() => {
-    if (localStorage.getItem("favCountries")){
-      setFavouritesList(JSON.parse(localStorage.getItem('favCountries')))
-    }
-   dispatch(initializeCountries())
-   }, [user,dispatch])
+    dispatch(initializeCountries());
+   }, [ dispatch])
 
   // We will be replacing this with data from our API.
-  const country = {
-    name: {
-      common: "Example Country",
-    },
-  };
+  
 
   return (
     <Container fluid>

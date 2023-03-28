@@ -9,16 +9,29 @@ import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { useDispatch, useSelector } from 'react-redux';
-import { LinkContainer } from 'react-router-bootstrap';
 import { initializeCountries } from '../features/contriesSlice';
-import { Button, Image } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { clearfavourite, removeFromFav } from '../features/ProfileSlice';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../auth/Firebase';
+import { useNavigate } from 'react-router-dom';
 
 
 const Favourite = () => {
+  const [user] = useAuthState(auth);
   const [search, setSearch] = useState('')
 const [favouritesList, setFavouritesList] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  let favourites = useSelector(state => state.favourite.favCountries) 
+console.log(favourites.filter(fav => fav.userId === user.uid))
+useEffect(()=>{
+  if(!user) {navigate('/login')}
+  else{
+    setFavouritesList(()=>favourites.filter(fav => fav.userId === user.uid))
+  }
+
+},[favourites, navigate, user])
   let countryList = useSelector(state => state.countries.countries)  // state.countries ( this is store).countries(this is slice   initialState: {countries: [],},)
   const isLoading = useSelector(state => state.countries.isLoading)
  
@@ -29,14 +42,14 @@ const [favouritesList, setFavouritesList] = useState([]);
     countryList=[];
   }
  useEffect(() => {
-  
+ 
  dispatch(initializeCountries())
- setFavouritesList(localStorage.getItem('favCountries'))
 
- }, [dispatch, favouritesList])
+ }, [dispatch,])
 
   return (
     <Container fluid>
+      {console.log(favouritesList)}
       <Row>
         <Col className="mt-5 d-flex justify-content-center">
           <Form>

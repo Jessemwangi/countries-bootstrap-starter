@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { browserSessionPersistence, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { toast } from "react-toastify";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -35,8 +36,31 @@ const logInWithEmailAndPassword = async (email, password) => {
                  
          } 
           )
-          .catch(error => console.log(error))
+          .catch(error => {
+            toast.error("Authentication Error, invalid Email or Password", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
+            console.log(error)
+          }
+          )
     } catch (err) {
+        toast.error("Error 500, an error occured try sigining you in", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });
         console.log(err)
         // alert(err.message)
     }
@@ -46,7 +70,16 @@ const registerWithEmailAndPassword =  (name, email, password) => {
     try {
          createUserWithEmailAndPassword(auth, email, password )
          .then(cred => {
-            console.log("User register successfully", cred.user);
+            toast.success(`User register successfully, ${cred.user}`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
             if (auth.currentUser){
                 updateProfile(auth.currentUser,{displayName:name,})
                }   
@@ -59,11 +92,31 @@ const registerWithEmailAndPassword =  (name, email, password) => {
          })
          .catch((error ) => {
             console.log("creating account failed",error)
+            toast.warn(`creating account failed, ${error.message}`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
         })
          
     } catch (err) {
         console.log(err)
         // alert(err.message)
+        toast.error(`creating account failed`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });
     }
 }
 

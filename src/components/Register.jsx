@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, registerWithEmailAndPassword } from "../auth/Firebase";
+import { Col, Container, Spinner } from "react-bootstrap";
 
 const Register = () => {
     const init={
@@ -32,7 +33,13 @@ password:"",
     },[user, loading, navigate, error])
 
     return (
-
+      loading ? (
+        <Container fluid>
+          <Col className="mt-5 text-center">
+            <Spinner animation="border" variant="info" />
+          </Col>
+        </Container>
+      ) :(
 <div className="wrapper">
       <div className="logo">
         <img
@@ -84,7 +91,7 @@ password:"",
         Have an account? <Link to="/Login">Login</Link>
       </div>
     </div>
-    )
+    ))
 }
 
 export { Register };
