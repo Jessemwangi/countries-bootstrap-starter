@@ -9,7 +9,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { useDispatch, useSelector } from 'react-redux';
 import { initializeCountries } from '../features/contriesSlice';
-import { Button } from 'react-bootstrap';
+import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { clearfavourite, removeFromFav } from '../features/ProfileSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../auth/Firebase';
@@ -23,7 +23,7 @@ const [favouritesList, setFavouritesList] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let favourites = useSelector(state => state.favourite.favCountries) 
-console.log(favourites,user.uid,favourites.filter(fav => fav.userId === user.uid))
+
 useEffect(()=>{
   if(!user) {navigate('/login')}
   else{
@@ -35,7 +35,7 @@ useEffect(()=>{
   const isLoading = useSelector(state => state.countries.isLoading)
  
   if(favouritesList !==  null){
-    countryList = countryList.filter(country => favouritesList.includes(country.name.common))
+    countryList = countryList.filter(country => favouritesList.map(fav =>fav.name).includes(country.name.common))
   }
   else{
     countryList=[];
@@ -46,9 +46,24 @@ useEffect(()=>{
 
  }, [dispatch,])
 
+ const tooltip = (
+  <Tooltip id="tooltip">
+    <strong>Remove !</strong> from favourite.
+  </Tooltip>
+);
   return (
+    
     <Container fluid>
-      {console.log(favouritesList)}
+
+{isLoading ? (
+      <Container fluid>
+        <h1>loading your favourite....</h1>
+            <Col className="mt-5 text-center">
+              <Spinner animation="border" variant="info" />
+            </Col>
+          </Container>
+    ):(
+<>
       <Row>
         <Col className="mt-5 d-flex justify-content-center">
           <Form>
@@ -92,13 +107,15 @@ useEffect(()=>{
                 state={{ country: country }}
               > */}
                 <Card className="h-100">
-                  <i className='bi bi-heart-fill text-danger m-1 p-1' onClick={
+                <OverlayTrigger placement="left" overlay={tooltip}>
+   
+ 
+                  <i className="bi bi-trash3-fill text-danger m-1 p-1" style={{"cursor":"pointer"}}
+                    onClick={
                     () =>{
-                        console.log(country.name.common)
                       dispatch(removeFromFav(country.name.common))
                     }
-                    }/>
-
+                    }/></OverlayTrigger>
                   <Card.Body className="d-flex flex-column">
                     <Card.Img className='mb-4' src={country.flags.svg} alt={country.name.common} />
                     <Card.Title>{country.name.common}</Card.Title>
@@ -136,7 +153,10 @@ useEffect(()=>{
           }
         
       </Row>
+      </>
+       )}
     </Container>
+   
   );
 };
 

@@ -7,10 +7,7 @@ import { auth, logInWithEmailAndPassword } from "../auth/Firebase";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const init = {
-    email: "",
-    password: "",
-  };
+ 
   const [userData, setUserData] = useState({});
   const [user, loading, error] = useAuthState(auth);
   // console.log(user)
