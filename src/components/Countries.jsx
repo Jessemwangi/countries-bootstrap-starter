@@ -19,14 +19,12 @@ const Countries = () => {
  
   let favouritesList = useSelector(state => state.favourite.favCountries)
   const [user] = useAuthState(auth);
-  // const [favouritesList, setFavouritesList] = useState([]);
-  // const [countryList,setCountryList] = useState([]);
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState("");
   let countryList = useSelector((state) => state.countries.countries); // state.countries ( this is store).countries(this is slice   initialState: {countries: [],},)
   const isLoading = useSelector((state) => state.countries.isLoading);
-  // console.log(favourites,"country list")
+console.log(countryList[3])
    useEffect(() => {
     dispatch(initializeCountries());
    }, [ dispatch])
@@ -71,10 +69,7 @@ const Countries = () => {
             })
             .map((country) => (
               <Col className="mt-5" key={country.name.common}>
-                <LinkContainer
-                  to={`/countries/${country.name.common}`}
-                  state={{ country: country }}
-                >
+
                   <Card className="h-100">
                     { (favouritesList.filter((fav) => fav.userId === user.uid )).map(countryName => countryName.name).includes(country.name.common)
                      ? (
@@ -82,7 +77,7 @@ const Countries = () => {
                      
                       </>
                     ) : (
-                      <i
+                      <i style={{"cursor":"pointer"}}
                         className="bi bi-heart-fill text-danger m-1 p-1"
                         onClick={() => {
                           let favCountry = {
@@ -94,6 +89,10 @@ const Countries = () => {
                         }}
                       />
                     )}
+                                    <LinkContainer style={{"cursor":"pointer"}}
+                  to={`/countries/${country.name.common}`}
+                  state={{ country: country }}
+                >
                     <Card.Body className="d-flex flex-column">
                       <Card.Img
                         className="mb-4"
@@ -130,9 +129,9 @@ const Countries = () => {
                           {country.population.toLocaleString()}
                         </ListGroup.Item>
                       </ListGroup>
-                    </Card.Body>
+                    </Card.Body></LinkContainer> 
                   </Card>
-                </LinkContainer>
+                {/* */}
               </Col>
             ))
         )}
