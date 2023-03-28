@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -24,7 +23,7 @@ const [favouritesList, setFavouritesList] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let favourites = useSelector(state => state.favourite.favCountries) 
-console.log(favourites.filter(fav => fav.userId === user.uid))
+console.log(favourites,user.uid,favourites.filter(fav => fav.userId === user.uid))
 useEffect(()=>{
   if(!user) {navigate('/login')}
   else{

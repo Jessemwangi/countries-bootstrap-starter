@@ -33,7 +33,7 @@ const Countries = () => {
 
   // We will be replacing this with data from our API.
   
-
+  
   return (
     <Container fluid>
       <Row>
@@ -76,9 +76,10 @@ const Countries = () => {
                   state={{ country: country }}
                 >
                   <Card className="h-100">
-                    { favouritesList.map((fav) => fav.name ).includes(country.name.common)
+                    { (favouritesList.filter((fav) => fav.userId === user.uid )).map(countryName => countryName.name).includes(country.name.common)
                      ? (
-                      <><i className="bi bi-check-lg"> Added to Favourite</i>
+                      <><i className="bi bi-check-lg" style={{"color":"green"}}> Added to Favourite</i>
+                     
                       </>
                     ) : (
                       <i

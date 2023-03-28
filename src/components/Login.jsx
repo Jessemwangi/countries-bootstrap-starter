@@ -13,13 +13,13 @@ const Login = () => {
   };
   const [userData, setUserData] = useState({});
   const [user, loading, error] = useAuthState(auth);
-  console.log(user)
+  // console.log(user)
   const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     e.preventDefault();
     setUserData({ ...userData, [e.target.name]: e.target.value });
-    console.log(userData);
+   
   };
   const handleLogin = (e) => {
     e.preventDefault();
