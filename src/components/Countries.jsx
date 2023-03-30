@@ -14,24 +14,21 @@ import { addToFavourite } from "../features/ProfileSlice";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../auth/Firebase";
 
-
 const Countries = () => {
- 
-  let favouritesList = useSelector(state => state.favourite.favCountries)
+  let favouritesList = useSelector((state) => state.favourite.favCountries);
   const [user] = useAuthState(auth);
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState("");
   let countryList = useSelector((state) => state.countries.countries); // state.countries ( this is store).countries(this is slice   initialState: {countries: [],},)
   const isLoading = useSelector((state) => state.countries.isLoading);
-console.log(countryList[3])
-   useEffect(() => {
+  // console.log([ "DJI", "ETH", "KEN" ].filter(border => border.includes(countryList.map(Cborder => Cborder.borders))))
+  useEffect(() => {
     dispatch(initializeCountries());
-   }, [ dispatch])
+  }, [dispatch]);
 
-  // We will be replacing this with data from our API.
-  
-  
+  console.log(countryList[3]);
+
   return (
     <Container fluid>
       <Row>
@@ -69,30 +66,39 @@ console.log(countryList[3])
             })
             .map((country) => (
               <Col className="mt-5" key={country.name.common}>
-
-                  <Card className="h-100">
-                    { (favouritesList.filter((fav) => fav.userId === user.uid )).map(countryName => countryName.name).includes(country.name.common)
-                     ? (
-                      <><i className="bi bi-check-lg" style={{"color":"green"}}> Added to Favourite</i>
-                     
-                      </>
-                    ) : (
-                      <i style={{"cursor":"pointer"}}
-                        className="bi bi-heart-fill text-danger m-1 p-1"
-                        onClick={() => {
-                          let favCountry = {
-                            name: country.name.common,
-                            userEmail: user.email,
-                            userId: user.uid,
-                          };
-                          dispatch(addToFavourite(favCountry));
-                        }}
-                      />
-                    )}
-                                    <LinkContainer style={{"cursor":"pointer"}}
-                  to={`/countries/${country.name.common}`}
-                  state={{ country: country }}
-                >
+                <Card className="h-100">
+                  {favouritesList
+                    .filter((fav) => fav.userId === user.uid)
+                    .map((countryName) => countryName.name)
+                    .includes(country.name.common) ? (
+                    <>
+                      <i className="bi bi-check-lg" style={{ color: "green" }}>
+                        {" "}
+                        Added to Favourite
+                      </i>
+                    </>
+                  ) : (
+                    <i
+                      style={{ cursor: "pointer" }}
+                      className="bi bi-heart-fill text-danger m-1 p-1"
+                      onClick={() => {
+                        let favCountry = {
+                          name: country.name.common,
+                          userEmail: user.email,
+                          userId: user.uid,
+                        };
+                        dispatch(addToFavourite(favCountry));
+                      }}
+                    />
+                  )}
+                  <LinkContainer
+                    style={{ cursor: "pointer" }}
+                    to={`/countries/${country.name.common}`}
+                    state={{
+                      country: country,
+                      neighbors: country.borders,
+                    }}
+                  >
                     <Card.Body className="d-flex flex-column">
                       <Card.Img
                         className="mb-4"
@@ -129,8 +135,9 @@ console.log(countryList[3])
                           {country.population.toLocaleString()}
                         </ListGroup.Item>
                       </ListGroup>
-                    </Card.Body></LinkContainer> 
-                  </Card>
+                    </Card.Body>
+                  </LinkContainer>
+                </Card>
                 {/* */}
               </Col>
             ))

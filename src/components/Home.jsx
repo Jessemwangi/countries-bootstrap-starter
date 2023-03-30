@@ -1,4 +1,5 @@
 import React from 'react';
+import HomeDirection from './HomeDirection';
 
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
         <a href="https://restcountries.com/">https://restcountries.com/ </a> and{' '}
         <a href="https://openweathermap.org/">https://openweathermap.org/</a>
       </div>
+      <HomeDirection/>
 
                 
     </div>

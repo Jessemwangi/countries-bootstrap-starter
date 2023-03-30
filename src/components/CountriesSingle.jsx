@@ -7,27 +7,38 @@ import { useLocation } from 'react-router-dom'
 const CountriesSingle = () => {
   const country = useLocation()
 const [countryName,] =useState(country.state.country.name.common)
+const [neighbors,setNeighbors] =useState([])
+
 const [loading,setLoading]=useState(true)
 const [error,SetError] = useState()
 
   const [weather,setWeather] = useState();
+  const baseUrl = `https://restcountries.com/v3.1/alpha?codes=${country.state.neighbors.join(',')}`
+
+  useEffect(() =>{
+    const fetchNeighborNames = async () =>{
+const {data} = await axios.get(baseUrl);
+setNeighbors(()=> data.map(country => country.name.common))
+    }
+   fetchNeighborNames()
+  },[baseUrl])
+
+  console.log(neighbors)
   useEffect( () => {
     setLoading(true)
-    const fetchData = async () =>{
+ const fetchCountryWeather = async () =>{
 
       try {
 	const apiKey =process.env.REACT_APP_OPENWEATHER_KEY
 	      const {data} =  await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${countryName}&units=metric&appid=${apiKey}`)
 	    setWeather(data);
       setLoading(false)
-      // console.log(country)
+      
 } catch (error) {
 	SetError(error)
 }
     }
-    
- 
-    fetchData()
+    fetchCountryWeather()
 
   }, [countryName])
   return (
@@ -63,6 +74,7 @@ const [error,SetError] = useState()
       
           
         </Col>}
+        
       </Row>
     </Container>)
   );

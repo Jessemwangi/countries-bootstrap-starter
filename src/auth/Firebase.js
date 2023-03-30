@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { browserSessionPersistence, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { addDoc, collection, getFirestore, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -83,7 +83,7 @@ const registerWithEmailAndPassword =  (name, email, password) => {
             if (auth.currentUser){
                 updateProfile(auth.currentUser,{displayName:name,})
                }   
-               addDoc(collection(db, "users"), {
+               setDoc(collection(db, "users",cred.user.uid), {
                 uid: cred.user.uid,
                 name,
                 authProvider: "local",
