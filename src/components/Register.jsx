@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, registerWithEmailAndPassword } from "../auth/Firebase";
 import { Col, Container, Spinner } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const Register = () => {
     const init={
@@ -14,10 +15,44 @@ password:"",
     const [user, loading, error] = useAuthState(auth)
     const navigate = useNavigate();
 
+    const validateEmail = (email) => {
+      const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
+      return regex.test(email);
+    };
+
     const register = (e) => {
         e.preventDefault();
-         if(!userData.name) alert("Please enter name"); 
-         registerWithEmailAndPassword(userData.name, userData.email, userData.password)
+         if(userData.name && userData.email && userData.password) {
+          if (validateEmail(userData.email)) {
+            registerWithEmailAndPassword(userData.name, userData.email, userData.password)
+          } else {
+            toast.warn(
+              "Invalid Email, email format should be : johndoe@domain.com",
+              {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              }
+            );
+          }
+         }else
+         {
+          toast.error("Invalid username or Email, Empty Login details", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+         }
     }
 
     const handleOnChange = (e) => {
