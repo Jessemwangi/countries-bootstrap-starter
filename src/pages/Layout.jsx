@@ -15,7 +15,6 @@ const Layout = () => {
     <Container fluid>
       <Row>
        
-
 <ToastContainer/>
         <Navbar bg="dark" variant="dark">
           <Container className="justify-content-end">

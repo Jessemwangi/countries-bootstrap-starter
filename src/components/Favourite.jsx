@@ -102,14 +102,9 @@ useEffect(()=>{
           }).map(country =>(
 
             <Col className="mt-5" key={country.name.common}>
-              {/* <LinkContainer
-                to={`/countries/${country.name.common}`}
-                state={{ country: country }}
-              > */}
                 <Card className="h-100">
                 <OverlayTrigger placement="left" overlay={tooltip}>
-   
- 
+  
                   <i className="bi bi-trash3-fill text-danger m-1 p-1" style={{"cursor":"pointer"}}
                     onClick={
                     () =>{
@@ -146,7 +141,6 @@ useEffect(()=>{
                     </ListGroup>
                   </Card.Body>
                 </Card>
-              {/* </LinkContainer> */}
             </Col>
           ))
        )

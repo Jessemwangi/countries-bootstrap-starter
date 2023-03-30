@@ -1,13 +1,7 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { browserSessionPersistence, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import {  collection, getFirestore, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyCkPvKmA_flxks1iSZ_c4J-kTW7OXv9Je0",
     authDomain: "countries-91c86.firebaseapp.com",
@@ -17,8 +11,6 @@ const firebaseConfig = {
     appId: "1:334800848237:web:4341f223bea951a5dc8664"
   };
 
-
-// Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
  export const auth = getAuth(app, {
