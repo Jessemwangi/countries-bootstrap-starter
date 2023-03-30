@@ -103,7 +103,7 @@ import { Button, ButtonGroup, Col, Container, FormControl, InputGroup, OverlayTr
               </Col>
               <Col>
                 <ButtonGroup>
-                <OverlayTrigger placement="right" overlay={tooltip("Show","Routes and Distance")}>
+                <OverlayTrigger placement="bottom" overlay={tooltip("Show","Routes and Distance")}>
                   <Button className='btn btn-primary' onClick={calculateRoute}>
                     Calculate  <i className="bi bi-airplane-engines-fill"></i> Route
                   </Button>
@@ -123,13 +123,15 @@ import { Button, ButtonGroup, Col, Container, FormControl, InputGroup, OverlayTr
                 <p>Duration: {duration} </p>
               </Col>
               <Col>
-                <Button variant="light" onClick={() => {
+              <OverlayTrigger placement="bottom" overlay={tooltip("Reset","Pin position to original")}>
+                <Button variant="danger" onClick={() => {
                   map.panTo(center);
                   map.setZoom(15);
                 }}>
                     <i className="bi bi-geo-fill"></i>
                   {/* <FaLocationArrow /> */}
                 </Button>
+                </OverlayTrigger>
               </Col>
             </Row>
           </div>
