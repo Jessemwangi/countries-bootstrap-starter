@@ -13,11 +13,11 @@ import React from 'react';
 import { Button, ButtonGroup, Col, Container, FormControl, InputGroup, OverlayTrigger, Row, Spinner, Tooltip } from 'react-bootstrap';
 
   const center = { lat: 60.2017, lng: 24.9359 }
-
+  const libraries = ['places'];
   const HomeDirection = () => {
     const { isLoaded } = useJsApiLoader({
       googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-      libraries: ['places'],
+      libraries,
     })
 
     const [map, setMap] = useState(/** @type google.maps.Map */ (null))

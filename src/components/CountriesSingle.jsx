@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { Col, Container, Image, Row, Spinner } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
+import CountryMap from "./CountryMap";
 
 const CountriesSingle = () => {
   const country = useLocation();
@@ -13,19 +14,18 @@ const CountriesSingle = () => {
   const [error, SetError] = useState();
 
   const [weather, setWeather] = useState();
-  const baseUrl = `https://restcountries.com/v3.1/alpha?codes=${country.state.neighbors.join(
-    ","
-  )}`;
+  const baseUrl = `https://restcountries.com/v3.1/alpha?codes=`;
 const randomColor =["primary","danger","info","warning","light","success","secondary"]
   useEffect(() => {
     const fetchNeighborNames = async () => {
-      const { data } = await axios.get(baseUrl);
-      setNeighbors(() => data.map((country) => country.name.common));
-    };
+      if(country.state.neighbors.length > 0){
+        const { data } = await axios.get(`${baseUrl}${country.state.neighbors.join(",")}`);
+        setNeighbors(() => data.map((country) => country.name.common));
+      };
+      }
     fetchNeighborNames();
   }, [baseUrl]);
 
-  console.log(neighbors);
   useEffect(() => {
     setLoading(true);
     const fetchCountryWeather = async () => {
@@ -42,6 +42,7 @@ const randomColor =["primary","danger","info","warning","light","success","secon
     };
     fetchCountryWeather();
   }, [countryName]);
+  console.log(country.state.country);
   return loading ? (
     <Container fluid>
       <Col className="mt-5 text-center">
@@ -50,7 +51,7 @@ const randomColor =["primary","danger","info","warning","light","success","secon
     </Container>
   ) : (
     <Container>
-      <h1>{country.state.country.name.common}</h1>
+      <h1>{country.state.country.name.common} {country.state.country.flag}</h1>
       <Row>
         <Col className="col-4">
           <Image
@@ -83,24 +84,41 @@ const randomColor =["primary","danger","info","warning","light","success","secon
             </Row>
             <Row>
               
-              {neighbors.map((neigbor) => 
-              <>
-              <Col className={`bg-${randomColor[Math.floor(Math.random() * randomColor.length)]} border p-2 m-2 text-center`}>
-
+              {neighbors.length > 0 ? (neighbors.map((neigbor) => 
+             
+              <Col key={neigbor} className={`bg-${randomColor[Math.floor(Math.random() * randomColor.length)]} border p-2 m-2 text-center`}>
                 {neigbor}
                 </Col>
-              </>
+             
+              )):(
+                <Col className="border p-2 m-2 text-center bg-light">No Neighbours Found</Col>
               )}
             </Row>
             </Row>
           </Col>
         )}
       </Row>
-      <Row className="p-3 bg-secondary mt-3 text-white text-center col-10 center">
+      <Row className="p-3 bg-secondary mt-3 mb-4 text-white text-center col-10 center">
         <Col >
         <h2>More About {country.state.country.name.common}</h2>
         </Col>
+        <Row>
+          <Col>Capital city : {country.state.country.capital.join(' , ')}</Col>
+          <Col>Population : {country.state.country.population.toString()}</Col>
+        </Row>
+        <Row>
+          <Col></Col>
+          <Col></Col>
+        </Row>
       </Row>
+      <Row>
+        <Col className="col-10 center">
+      <CountryMap latlng ={country.state.country.latlng}/>
+        </Col>
+      </Row>
+      <Container>
+   
+      </Container>
     </Container>
   );
 };

@@ -22,12 +22,12 @@ const Countries = () => {
   const [search, setSearch] = useState("");
   let countryList = useSelector((state) => state.countries.countries); // state.countries ( this is store).countries(this is slice   initialState: {countries: [],},)
   const isLoading = useSelector((state) => state.countries.isLoading);
-  
+
   useEffect(() => {
     dispatch(initializeCountries());
   }, [dispatch]);
 
-  console.log(countryList[3]);
+ 
 
   return (
     <Container fluid>

@@ -11,14 +11,20 @@ import { Login } from "./components/Login";
 import { Register } from "./components/Register";
 import { ProtectedRoute } from "./auth/ProtectedRoute";
 import 'react-toastify/dist/ReactToastify.css';
+import { useJsApiLoader } from "@react-google-maps/api";
+import CountryMap from "./components/CountryMap";
 
 const App = () => {
+  // useJsApiLoader({
+  //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  // });
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login></Login>}></Route>
+          <Route path="/map" element={<CountryMap/>}></Route>
           <Route path="/register" element={<Register></Register>}></Route>
           <Route element={<ProtectedRoute />}>
             <Route path="/countries" element={<Countries />} />
