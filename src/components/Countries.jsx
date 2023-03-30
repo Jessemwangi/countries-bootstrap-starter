@@ -22,7 +22,7 @@ const Countries = () => {
   const [search, setSearch] = useState("");
   let countryList = useSelector((state) => state.countries.countries); // state.countries ( this is store).countries(this is slice   initialState: {countries: [],},)
   const isLoading = useSelector((state) => state.countries.isLoading);
-  // console.log([ "DJI", "ETH", "KEN" ].filter(border => border.includes(countryList.map(Cborder => Cborder.borders))))
+  
   useEffect(() => {
     dispatch(initializeCountries());
   }, [dispatch]);

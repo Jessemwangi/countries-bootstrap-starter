@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { browserSessionPersistence, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
-import { addDoc, collection, getFirestore, setDoc } from "firebase/firestore";
+import {  collection, getFirestore, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -31,8 +31,17 @@ const logInWithEmailAndPassword = async (email, password) => {
         await signInWithEmailAndPassword(auth, email, password)
         .then(
             (userCredential)=>{
-                console.log("user was created",userCredential.user)
                const user = userCredential.user; 
+               toast.success(`Welcome back ${user.displayName}.`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
                  
          } 
           )

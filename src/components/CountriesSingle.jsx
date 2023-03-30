@@ -62,8 +62,8 @@ const randomColor =["primary","danger","info","warning","light","success","secon
 
         {weather && !error && (
           <Col >
-            <h2>{country.state.country.name.common}</h2>
-            right now it is : <strong>{weather.main.temp} °C</strong>
+           
+            Right now it is : <strong>{weather.main.temp} °C</strong>
             <p>
               Cities:{" "}
               <strong>{country.state.country.capital.join(", ")}</strong>
@@ -86,7 +86,7 @@ const randomColor =["primary","danger","info","warning","light","success","secon
               {neighbors.map((neigbor) => 
               <>
               <Col className={`bg-${randomColor[Math.floor(Math.random() * randomColor.length)]} border p-2 m-2 text-center`}>
-                
+
                 {neigbor}
                 </Col>
               </>
@@ -95,6 +95,11 @@ const randomColor =["primary","danger","info","warning","light","success","secon
             </Row>
           </Col>
         )}
+      </Row>
+      <Row className="p-3 bg-secondary mt-3 text-white text-center col-10 center">
+        <Col >
+        <h2>More About {country.state.country.name.common}</h2>
+        </Col>
       </Row>
     </Container>
   );

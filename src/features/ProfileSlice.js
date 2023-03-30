@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { auth } from "../auth/Firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 export const favouriteSlice = createSlice({
   name: "favourite",

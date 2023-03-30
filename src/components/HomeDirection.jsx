@@ -93,12 +93,16 @@ import { Button, ButtonGroup, Col, Container, FormControl, InputGroup, OverlayTr
              className="mb-4">
               <Col>
                 <InputGroup>
+                <Autocomplete>
                   <FormControl placeholder="Origin" ref={originRef} />
+                  </Autocomplete>
                 </InputGroup>
               </Col>
               <Col>
                 <InputGroup>
+                <Autocomplete>
                   <FormControl placeholder="Destination" ref={destiantionRef} />
+                </Autocomplete>
                 </InputGroup>
               </Col>
               <Col>

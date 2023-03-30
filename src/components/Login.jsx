@@ -7,21 +7,43 @@ import { auth, logInWithEmailAndPassword } from "../auth/Firebase";
 import { toast } from "react-toastify";
 
 const Login = () => {
- 
   const [userData, setUserData] = useState({});
-  const [user, loading, error] = useAuthState(auth);
-  // console.log(user)
+  const [user, loading] = useAuthState(auth);
+
   const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     e.preventDefault();
     setUserData({ ...userData, [e.target.name]: e.target.value });
-   
   };
+  const validateEmail = (email) => {
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
+    return regex.test(email);
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
-    if (!userData.email || userData.password) {
-      toast.warn("Invalid username or Email, Empty Login details", {
+
+    if (userData.email && userData.password) {
+      if (validateEmail(userData.email)) {
+        logInWithEmailAndPassword(userData.email, userData.password);
+      } else {
+        toast.warn(
+          "Invalid Email, email format should be : johndoe@domain.com",
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          }
+        );
+      }
+    } else {
+      toast.error("Invalid username or Email, Empty Login details", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -31,9 +53,9 @@ const Login = () => {
         progress: undefined,
         theme: "colored",
       });
-      logInWithEmailAndPassword(userData.email, userData.password);
     }
   };
+  
   useEffect(() => {
     if (user) navigate("/countries");
   }, [navigate, user]);
