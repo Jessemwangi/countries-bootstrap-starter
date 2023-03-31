@@ -111,8 +111,7 @@ const Countries = () => {
                       </Card.Subtitle>
                       <ListGroup
                         variant="flush"
-                        className="flex-grow-1 justify-content-end"
-                      >
+                        className="flex-grow-1 justify-content-end">
                         <ListGroup.Item>
                           <i className="bi bi-translate me-2"></i>
                           {country.languages

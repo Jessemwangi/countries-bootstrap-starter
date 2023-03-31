@@ -61,9 +61,6 @@ const CountriesSingle = () => {
     </Container>
   ) : (
     <Container>
-      <h1>
-        {country.state.country.name.common} {country.state.country.flag}
-      </h1>
       <Row>
         <Col className="col-4">
           <Image
@@ -75,62 +72,76 @@ const CountriesSingle = () => {
 
         {weather && !error && (
           <Col>
-            Right now it is : <strong>{weather.main.temp} °C</strong>
-            <p>
-              Cities:{" "}
-              <strong>{country.state.country.capital.join(", ")}</strong>
-            </p>
-            <Row>
-              <Col className="center">
+            <Row className="mt-6">
+              <Col className="pt-5">
+                Right now it is : <strong>{weather.main.temp} °C</strong>
+                <p>
+                  in
+                  <strong> {country.state.country.capital.join(", ")}</strong>
+                </p>
                 <Image
                   thumbnail
                   src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                   alt={country.state.country.name.common}
                 />
+              </Col >
+              <Col >
+                <h1 className="align-middle display-1" style={{"marginTop":"10%"}}>
+                  {country.state.country.name.common}{" "}
+                  {country.state.country.flag}
+                </h1>
               </Col>
             </Row>
-            <Row className="border mt-3">
-              {/* <Row className="p-3 m-3 mt-6 rounded bg-dark text-white text-center col-11">
+            
+
+            <Row className="mt-3">
+              <fieldset className="border p-2">
+                <legend className="float-none w-auto p-2 ">Neighbours</legend>
+                <Row>
+                  {/* <Row className="p-3 m-3 mt-6 rounded bg-dark text-white text-center col-11">
               <Col >Border Countries</Col>
             </Row> */}
-              <Row>
-                {neighbors.length > 0 ? (
-                  neighbors.map((neigbor) => (
-                    <Col
-                      key={neigbor}
-                      className={`bg-${
-                        randomColor[
-                          Math.floor(Math.random() * randomColor.length)
-                        ]
-                      } border p-2 m-2 text-center`}
-                    >
-                      {neigbor}
+                  {neighbors.length > 0 ? (
+                    neighbors.map((neigbor) => (
+                      <Col
+                        key={neigbor}
+                        className={`bg-${
+                          randomColor[
+                            Math.floor(Math.random() * randomColor.length)
+                          ]
+                        } border p-2 m-2 text-center`}
+                      >
+                        {neigbor}
+                      </Col>
+                    ))
+                  ) : (
+                    <Col className="border p-2 m-2 text-center bg-light">
+                      No Neighbours Found
                     </Col>
-                  ))
-                ) : (
-                  <Col className="border p-2 m-2 text-center bg-light">
-                    No Neighbours Found
-                  </Col>
-                )}
-
-                <Row className="p-3 bg-light mt-3 mb-4 text-black text-center col-12 center">
-                  <Col>
-                    <h2>More About {country.state.country.name.common}</h2>
-                  </Col>
-                  <Row>
-                    <Col>
-                      Capital city : {country.state.country.capital.join(" , ")}
-                    </Col>
-                    <Col>
-                      Population : {country.state.country.population.toString()}
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col></Col>
-                    <Col></Col>
-                  </Row>
+                  )}
                 </Row>
-              </Row>
+              </fieldset>
+            </Row>
+
+            <Row className="mt-3 ">
+              <fieldset className="border p-6">
+                <legend className="float-none w-auto">
+                  More About {country.state.country.name.common}
+                </legend>
+
+                <Row className="p-2 m-2 col-5">
+                  <Col className="">
+                    Capital city : {country.state.country.capital.join(" , ")}
+                  </Col>
+                  <Col>
+                    Population : {country.state.country.population.toString()}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col></Col>
+                  <Col></Col>
+                </Row>
+              </fieldset>
             </Row>
           </Col>
         )}
