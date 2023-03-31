@@ -18,7 +18,7 @@ const CountryMap = ({latlng}) => {
 
   return (
     <>
-    <GoogleMap zoom={6} center={centers} mapContainerStyle={{"width":"98%", "height":"100vh"}}>
+    <GoogleMap zoom={6} center={centers} mapContainerStyle={{"width":"98%", "height":"40vh"}}>
   <Marker position={centers} />
 </GoogleMap>
 
