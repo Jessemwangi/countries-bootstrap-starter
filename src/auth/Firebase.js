@@ -3,14 +3,14 @@ import { browserSessionPersistence, createUserWithEmailAndPassword, getAuth, sig
 import {  collection, getFirestore, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 const firebaseConfig = {
-    apiKey: "AIzaSyCkPvKmA_flxks1iSZ_c4J-kTW7OXv9Je0",
-    authDomain: "countries-91c86.firebaseapp.com",
-    projectId: "countries-91c86",
-    storageBucket: "countries-91c86.appspot.com",
-    messagingSenderId: "334800848237",
-    appId: "1:334800848237:web:4341f223bea951a5dc8664"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTHDOMAIN,
+    projectId: process.env.REACT_APP_PROJECTID,
+    storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+    appId: process.env.REACT_APP_APPID
   };
-
+  
 export const app = initializeApp(firebaseConfig);
 
  export const auth = getAuth(app, {

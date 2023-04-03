@@ -105,11 +105,7 @@ const CountriesSingle = () => {
                     neighbors.map((neigbor) => (
                       <Col
                         key={neigbor}
-                        className={`bg-${
-                          randomColor[
-                            Math.floor(Math.random() * randomColor.length)
-                          ]
-                        } border p-2 m-2 text-center`}
+                        className={`bg-${randomColor[Math.floor(Math.random() * randomColor.length)]} border pl-8 pt-2 pb-2 pr-8 m-2 text-center`}
                       >
                         {neigbor}
                       </Col>
