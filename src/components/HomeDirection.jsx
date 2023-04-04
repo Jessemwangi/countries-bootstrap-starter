@@ -20,7 +20,7 @@ import { Button, ButtonGroup, Col, Container, FormControl, InputGroup, OverlayTr
       libraries,
     })
 
-    const [map, setMap] = useState(/** @type google.maps.Map */ (null))
+    const [map, setMap] = useState((null))
     const [directionsResponse, setDirectionsResponse] = useState(null)
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
