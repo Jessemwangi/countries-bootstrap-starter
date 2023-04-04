@@ -48,7 +48,7 @@ const logInWithEmailAndPassword = async (email, password) => {
                 progress: undefined,
                 theme: "colored",
                 });
-            console.log(error)
+           
           }
           )
     } catch (err) {
@@ -62,7 +62,7 @@ const logInWithEmailAndPassword = async (email, password) => {
             progress: undefined,
             theme: "colored",
             });
-        console.log(err)
+       
         // alert(err.message)
     }
 }
@@ -92,7 +92,7 @@ const registerWithEmailAndPassword =  (name, email, password) => {
             })
          })
          .catch((error ) => {
-            console.log("creating account failed",error)
+            
             toast.warn(`creating account failed, ${error.message}`, {
                 position: "top-right",
                 autoClose: 5000,
@@ -106,7 +106,7 @@ const registerWithEmailAndPassword =  (name, email, password) => {
         })
          
     } catch (err) {
-        console.log(err)
+      
         // alert(err.message)
         toast.error(`creating account failed`, {
             position: "top-right",

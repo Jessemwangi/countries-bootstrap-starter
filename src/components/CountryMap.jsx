@@ -10,7 +10,7 @@ const CountryMap = ({latlng}) => {
       })
   
     
-  const centers = useMemo(() => ({lat:latlng[0],lng:latlng[1]}),[]);
+  const centers = useMemo(() => ({lat:latlng[0],lng:latlng[1]}),[latlng]);
 
 
   if (loadError) return <div>Error loading Google Maps API</div>;

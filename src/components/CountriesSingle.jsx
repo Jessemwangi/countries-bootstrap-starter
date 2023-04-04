@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { Col, Container, Image, Row, Spinner } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CountryMap from "./CountryMap";
 
 const CountriesSingle = () => {
@@ -24,6 +24,8 @@ const CountriesSingle = () => {
     "success",
     "secondary",
   ];
+
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchNeighborNames = async () => {
       if (country.state.neighbors.length > 0) {
@@ -34,7 +36,7 @@ const CountriesSingle = () => {
       }
     };
     fetchNeighborNames();
-  }, [baseUrl]);
+  }, [baseUrl, country]);
 
   useEffect(() => {
     setLoading(true);
@@ -52,7 +54,17 @@ const CountriesSingle = () => {
     };
     fetchCountryWeather();
   }, [countryName]);
-  console.log(country.state.country);
+
+const getNeighbor = async (abbrev) => {
+ const {data} = await axios.get(`https://restcountries.com/v3.1/name/${abbrev}` );
+ navigate(`/countries/${data[0].name.common}`, {
+  state: {
+    country: data[0],
+    neighbors: data[0].borders,
+  },
+});           
+}
+
   return loading ? (
     <Container fluid>
       <Col className="mt-5 text-center">
@@ -103,9 +115,11 @@ const CountriesSingle = () => {
             </Row> */}
                   {neighbors.length > 0 ? (
                     neighbors.map((neigbor) => (
+                      
                       <Col
                         key={neigbor}
                         className={`bg-${randomColor[Math.floor(Math.random() * randomColor.length)]} border pl-8 pt-2 pb-2 pr-8 m-2 text-center`}
+                        onClick={(e) => getNeighbor(neigbor)}
                       >
                         {neigbor}
                       </Col>
