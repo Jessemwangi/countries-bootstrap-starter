@@ -119,6 +119,7 @@ const getNeighbor = async (abbrev) => {
                       <Col
                         key={neigbor}
                         className={`bg-${randomColor[Math.floor(Math.random() * randomColor.length)]} border pl-8 pt-2 pb-2 pr-8 m-2 text-center`}
+                        style={{"cursor":"pointer"}}
                         onClick={(e) => getNeighbor(neigbor)}
                       >
                         {neigbor}
