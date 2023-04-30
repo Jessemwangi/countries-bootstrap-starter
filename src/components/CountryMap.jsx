@@ -9,7 +9,7 @@ const CountryMap = ({latlng}) => {
         libraries,
       })
   
-    
+    console.log(latlng)
   const centers = useMemo(() => ({lat:latlng[0],lng:latlng[1]}),[latlng]);
 
 

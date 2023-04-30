@@ -1,18 +1,28 @@
-## Countries App
-This app displays a list of countries from restcountries.com and current weather conditions from <a href='https://openweathermap.org/'> OpenWeatherMap </a> . To access the list of countries, a user has to be authenticated using Google OAuth. Once a user logs in, they can view the list of countries, select their favorite countries, and delete unwanted countries from the list.
+## Countries and Weather App
+A web application that allows users to authenticate with Google OAuth and access a list of countries from restcountries.com, as well as view current weather conditions from OpenWeatherMap. The app includes a metric distance calculator that allows users to enter a start and destination and receive a path and distance in kilometers. User data is currently stored in local storage, but in the second sprint, the app will be merged with Firestore to store data in the cloud.
 
-Note that the system does not store data in a database but uses local storage. This means that if you change your PC or browser, your data won't be available. However, in the second sprint, we plan to merge the app with Firestore to store user data in the cloud.
+### Features
+        - Google OAuth authentication
+        - List of countries from restcountries.com
+        - Current weather conditions from OpenWeatherMap
+        - Metric distance calculator
+        - User favorite country selection
+        - User country deletion
+        - Local storage for user data (to be replaced with Firestore in the future)
 
 ### Technologies
+
 This app was built using the following technologies:
 
-        - React
-        - Redux
+        - React Redux
+        - local storage
         - JavaScript
         - Google OAuth
-        - Bootstrap
-        - CSS
+        - Bootstrap / CSS
+        - restcountries API | OpenWeatherMap API | GoogleMaps API
         - HTML
+___
+
 ### Map Functionality
 The app also has map functionality that allows you to select two locations and shows you the favorite route and the distance between the source and destination.
 
@@ -28,3 +38,7 @@ We hope you enjoy using our app!
 4. Open the application in your favorite IDE and run `npm i` or `yarn i` to install the required packages.
 
 That's it! You should now be able to run the application locally. If you encounter any issues during installation, please refer to the documentation or reach out to our support team for assistance.
+
+___
+
+This app is a work in progress and will continue to be developed in future sprints. 
